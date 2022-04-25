@@ -140,13 +140,13 @@
       this[globalName] = mainExports;
     }
   }
-})({"5bH3W":[function(require,module,exports) {
+})({"3t36S":[function(require,module,exports) {
 "use strict";
 var HMR_HOST = null;
 var HMR_PORT = null;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "d6ea1d42532a7575";
-module.bundle.HMR_BUNDLE_ID = "fe4256060641b553";
+module.bundle.HMR_BUNDLE_ID = "9899174236a03cf9";
 function _createForOfIteratorHelper(o, allowArrayLike) {
     var it;
     if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {
@@ -458,61 +458,82 @@ function hmrAcceptRun(bundle, id) {
     acceptedAssets[id] = true;
 }
 
-},{}],"bNKaB":[function(require,module,exports) {
+},{}],"1RMZw":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
-const errorMessage = document.getElementById('error');
-async function fetchCountries() {
+let countryName = "nederland";
+async function specificCountryData() {
+    let countryData;
     try {
-        const result = await _axiosDefault.default.get('https://restcountries.com/v2/all');
-        const countries = result.data;
-        countries.sort((a, b)=>{
-            return a.population - b.population;
+        const result = await _axiosDefault.default.get(`https://restcountries.com/v2/name/${countryName}`);
+        countryData = result.data.map((data)=>{
+            return data;
         });
-        countryList(countries);
     } catch (e) {
-        console.error(e);
-        if (e.response.status === 500) errorMessage.textContent = "Er ging iets mis in de server";
-        else if (e.response.status === 404) errorMessage.textContent = "Het verzoek is mislukt";
+        console.error(e.message);
+        console.log("massage" + e.message);
+        const element = document.getElementById("countryResult");
+        element.innerHTML = `
+                    <h1>Check je spelling!</h1>
+                    `;
     }
+    return countryData;
 }
-fetchCountries();
-function countryList(countries) {
-    const countryArray = document.getElementById('countries');
-    //Variabele maken voor HTML element (innerhtml)
-    // Variabele aanmaken, map methode aanroepen
-    countryArray.innerHTML = countries.map((country)=>{
-        return `
-        <div id="country" class="inner-content-container">
-            <div>
-                <img src="${country.flag}" alt="flag">
-                <span id="countryId" class=${regionSelector(country.region)}>${country.name}</span>        
-            </div>
-        <span>Has a population of ${country.population} people</span>
-        </div>
-        `;
-    }).join(" ");
+function countryData() {
+    specificCountryData().then((data)=>{
+        const { flag , name: countryName , subregion , population , capital ,  } = data[0];
+        let valuta = "";
+        if (data[0].currencies.length === 2) {
+            const [first, second] = data[0].currencies;
+            const { name: valutaName1  } = first;
+            const { name: ValutaName2  } = second;
+            valuta = `${valutaName1} and ${ValutaName2}'s`;
+        } else {
+            const [first] = data[0].currencies;
+            const { name: valutaName  } = first;
+            valuta = `${valutaName}`;
+        }
+        let language = "";
+        const [first, second, third] = data[0].languages;
+        if (data[0].languages.length === 3) language = `They speak ${first.nativeName}, ${second.nativeName} and ${third.nativeName}`;
+        if (data[0].languages.length === 2) language = `They speak ${first.nativeName} and ${second.nativeName}`;
+        if (data[0].languages.length === 1) language = `They speak ${first.nativeName}.`;
+        const element = document.getElementById("inject-country-information");
+        element.innerHTML = `
+        <div class="info-box">
+                <div class="flag-en-land">
+                    <img src="${flag}" width="70" height="50">
+                    <h1>${countryName}</h1>
+                </div>
+                <div class="text-Land">
+                    <h2>${countryName} is situated in ${subregion}. It has a population of ${population} people.</h2>
+                    <h2>The capital is ${capital} and you can pay with ${valuta}.</h2>      
+                    <h2>${language}.</h2>    
+                </div>
+</div>
+                                `;
+    });
 }
-function regionSelector(region) {
-    switch(region){
-        case 'Africa':
-            return "blue";
-        case 'Americas':
-            return "green";
-        case 'Asia':
-            return "red";
-        case 'Europe':
-            return "yellow";
-        case 'Oceana':
-            return "purple";
-        default:
-            return "white";
-    }
-} // <li>${response.data[1].name}</li>
- // <img src="${response.data[1].flag}" alt="flag"></li>
- // <li>Has a population of ${response.data[1].population} people</li>
- // <li>De Region is: ${response.data[1].region}</li>
+function CountrySearchButtonClick() {
+}
+const countryInputButon = document.getElementById("search-button");
+countryInputButon.addEventListener("click", CountrySearchButtonClick);
+function handelCountryInput(e) {
+    const currentValue = e.target.value;
+    console.log(`${currentValue}`);
+    countryName = currentValue.toLowerCase();
+}
+const countryNameInputField = document.getElementById("country-name");
+countryNameInputField.addEventListener("keyup", handelCountryInput);
+function handelSubmit(e) {
+    e.preventDefault();
+    specificCountryData();
+    countryData();
+    countryInformationRequest.reset();
+}
+const countryInformationRequest = document.getElementById("country-information-request");
+countryInformationRequest.addEventListener('submit', handelSubmit);
 
 },{"axios":"jo6P5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jo6P5":[function(require,module,exports) {
 module.exports = require('./lib/axios');
@@ -2108,6 +2129,6 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}]},["5bH3W","bNKaB"], "bNKaB", "parcelRequirecb08")
+},{}]},["3t36S","1RMZw"], "1RMZw", "parcelRequirecb08")
 
-//# sourceMappingURL=index.0641b553.js.map
+//# sourceMappingURL=search.36a03cf9.js.map

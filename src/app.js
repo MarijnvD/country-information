@@ -45,18 +45,19 @@ function countryList(countries){
 }
 
 function regionSelector(region) {
-    if (region === "Africa") {
-        return "blue"
-    } else if (region === "Americas") {
-        return "green"
-    } else if (region === "Asia") {
-        return "red"
-    } else if (region === "Europe") {
-        return "yellow";
-    } else if ( region === "Oceana")
-        return "purple";
-    else{
-        return "white";
+    switch (region) {
+        case 'Africa':
+            return "blue";
+        case 'Americas':
+            return "green";
+        case 'Asia':
+            return "red";
+        case 'Europe':
+            return "yellow";
+        case 'Oceana':
+            return "purple";
+        default:
+            return "white";
     }
 }
 

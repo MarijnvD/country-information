@@ -1,0 +1,44 @@
+@import "https://fonts.googleapis.com/css2?family=Square+Peg&display=swap";
+@import "https://fonts.googleapis.com/css2?family=Raleway:wght@200&family=Square+Peg&display=swap";
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+h1{
+    font-family: 'Square Peg', cursive;
+    margin: 10px;
+}
+h2{
+    font-family: 'Raleway', sans-serif;
+    margin: 10px;
+}
+image{
+    margin: 5px;
+    width: 400px;
+    height: 400px;
+}
+body {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.info-box{
+
+    margin: 50px;
+    padding: 20px;
+    box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.55);
+
+}
+.flag-en-land{
+    display: flex;
+    flex-direction: row;
+}
+form{
+    border-radius: 50%;
+}
+button{
+    background-color: chartreuse;
+}
+/*# sourceMappingURL=search.cad71a9b.css.map */
